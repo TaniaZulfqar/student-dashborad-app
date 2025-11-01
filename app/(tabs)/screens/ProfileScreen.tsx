@@ -1,148 +1,287 @@
+import { LinearGradient } from "expo-linear-gradient";
 import React, { useState } from "react";
-import { Button, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
-export default function ProfileScreen() {
-  const [showDetails, setShowDetails] = useState(false);
+const ProfileScreen = () => {
+  const [isEditing, setIsEditing] = useState(false);
 
-  // Dummy profile data
-  const student = {
+  const [profile, setProfile] = useState({
     name: "Tania Zulfiqar",
     rollNo: "BSCS-004",
     department: "Computer Science",
     semester: "7th",
-    gpa: 3.85,
-    attendancePercent: 92,
+    gpa: "3.85%",
     email: "tania.zulfiqar@example.com",
     phone: "+92 300 1234567",
-    skills: ["React Native", "JavaScript", "AI Basics", "Database Design"],
-    achievements: ["Dean’s Honor List", "Hackathon Winner", "Top Project Award"],
+    skills: "React Native, JavaScript, UI Design",
+    achievements: ["Learned C++", "Learned Reactive Learning", "Learned OOPS"],
+  });
+
+  const handleChange = (field: string, value: string) => {
+    setProfile({ ...profile, [field]: value });
   };
 
-  // Reusable progress bar
-  const ProgressBar = ({ percent, color }: { percent: number; color: string }) => (
-    <View style={styles.progressContainer}>
-      <View style={[styles.progressFill, { width: `${percent}%`, backgroundColor: color }]} />
-    </View>
-  );
+  const handleAchievementChange = (index: number, value: string) => {
+    const updated = [...profile.achievements];
+    updated[index] = value;
+    setProfile({ ...profile, achievements: updated });
+  };
 
-  // 1️⃣ Summary view (short info)
-  if (!showDetails) {
-    return (
-      <View style={styles.container}>
-        <View style={styles.profileHeader}>
-          <Image
-            source={{
-              uri: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
-            }}
-            style={styles.avatar}
-          />
-          <Text style={styles.name}>{student.name}</Text>
-          <Text style={styles.roll}>{student.rollNo}</Text>
-        </View>
+  const addAchievement = () => {
+    setProfile({
+      ...profile,
+      achievements: [...profile.achievements, ""],
+    });
+  };
 
-        <Text style={styles.sectionTitle}>📈 Academic Overview</Text>
-        <Text style={styles.label}>GPA</Text>
-        <ProgressBar percent={(student.gpa / 4) * 100} color="#4CAF50" />
-        <Text style={styles.percentText}>{student.gpa.toFixed(2)} / 4.00</Text>
+  const handleSave = () => {
+    setIsEditing(false);
+    alert("Profile updated successfully!");
+  };
 
-        <Text style={styles.label}>Attendance</Text>
-        <ProgressBar percent={student.attendancePercent} color="#2196F3" />
-        <Text style={styles.percentText}>{student.attendancePercent}%</Text>
-
-        <View style={{ marginTop: 30 }}>
-          <Button title="View Full Profile →" onPress={() => setShowDetails(true)} />
-        </View>
-      </View>
-    );
-  }
-
-  // 2️⃣ Detailed Profile view
   return (
-    <View style={styles.container}>
-      <Text style={styles.sectionTitle}>👤 Full Profile</Text>
+    <LinearGradient colors={["#E3F2FD", "#FFFFFF"]} style={styles.container}>
+      <ScrollView contentContainerStyle={styles.content}>
+        <Text style={styles.header}>👩‍🎓 Student Profile</Text>
 
-      <View style={styles.infoBox}>
-        <Text style={styles.label}>Name: <Text style={styles.value}>{student.name}</Text></Text>
-        <Text style={styles.label}>Roll No: <Text style={styles.value}>{student.rollNo}</Text></Text>
-        <Text style={styles.label}>Department: <Text style={styles.value}>{student.department}</Text></Text>
-        <Text style={styles.label}>Semester: <Text style={styles.value}>{student.semester}</Text></Text>
-        <Text style={styles.label}>Email: <Text style={styles.value}>{student.email}</Text></Text>
-        <Text style={styles.label}>Phone: <Text style={styles.value}>{student.phone}</Text></Text>
-      </View>
+        {/* Profile Card */}
+        <View style={styles.card}>
+          <Text style={styles.sectionTitle}>Full Profile</Text>
 
-      <Text style={styles.sectionTitle}>💡 Skills</Text>
-      <FlatList
-        data={student.skills}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.skillBadge}>
-            <Text style={styles.skillText}>{item}</Text>
+          {/* Name */}
+          <View style={styles.field}>
+            <Text style={styles.label}>Name:</Text>
+            {isEditing ? (
+              <TextInput
+                style={styles.input}
+                value={profile.name}
+                onChangeText={(text) => handleChange("name", text)}
+              />
+            ) : (
+              <Text style={styles.value}>{profile.name}</Text>
+            )}
           </View>
-        )}
-      />
 
-      <Text style={styles.sectionTitle}>🏆 Achievements</Text>
-      {student.achievements.map((ach, index) => (
-        <Text key={index} style={styles.achievement}>
-          • {ach}
-        </Text>
-      ))}
+          {/* Roll No */}
+          <View style={styles.field}>
+            <Text style={styles.label}>Roll No:</Text>
+            {isEditing ? (
+              <TextInput
+                style={styles.input}
+                value={profile.rollNo}
+                onChangeText={(text) => handleChange("rollNo", text)}
+              />
+            ) : (
+              <Text style={styles.value}>{profile.rollNo}</Text>
+            )}
+          </View>
 
-      <View style={{ marginTop: 25 }}>
-        <Button title="⬅ Back to Summary" onPress={() => setShowDetails(false)} />
-      </View>
+          {/* Department */}
+          <View style={styles.field}>
+            <Text style={styles.label}>Department:</Text>
+            {isEditing ? (
+              <TextInput
+                style={styles.input}
+                value={profile.department}
+                onChangeText={(text) => handleChange("department", text)}
+              />
+            ) : (
+              <Text style={styles.value}>{profile.department}</Text>
+            )}
+          </View>
 
-      <TouchableOpacity style={styles.editButton}>
-        <Text style={styles.editText}>✏️ Edit Profile</Text>
-      </TouchableOpacity>
-    </View>
+          {/* Semester */}
+          <View style={styles.field}>
+            <Text style={styles.label}>Semester:</Text>
+            {isEditing ? (
+              <TextInput
+                style={styles.input}
+                value={profile.semester}
+                onChangeText={(text) => handleChange("semester", text)}
+              />
+            ) : (
+              <Text style={styles.value}>{profile.semester}</Text>
+            )}
+          </View>
+
+          {/* GPA */}
+          <View style={styles.field}>
+            <Text style={styles.label}>GPA:</Text>
+            {isEditing ? (
+              <TextInput
+                style={styles.input}
+                value={profile.gpa}
+                keyboardType="decimal-pad"
+                onChangeText={(text) => handleChange("gpa", text)}
+              />
+            ) : (
+              <Text style={styles.value}>{profile.gpa}</Text>
+            )}
+          </View>
+
+          {/* Email */}
+          <View style={styles.field}>
+            <Text style={styles.label}>Email:</Text>
+            {isEditing ? (
+              <TextInput
+                style={styles.input}
+                value={profile.email}
+                onChangeText={(text) => handleChange("email", text)}
+              />
+            ) : (
+              <Text style={styles.value}>{profile.email}</Text>
+            )}
+          </View>
+
+          {/* Phone */}
+          <View style={styles.field}>
+            <Text style={styles.label}>Phone:</Text>
+            {isEditing ? (
+              <TextInput
+                style={styles.input}
+                value={profile.phone}
+                onChangeText={(text) => handleChange("phone", text)}
+              />
+            ) : (
+              <Text style={styles.value}>{profile.phone}</Text>
+            )}
+          </View>
+
+          {/* Skills */}
+          <View style={styles.field}>
+            <Text style={styles.label}>Skills:</Text>
+            {isEditing ? (
+              <TextInput
+                style={[styles.input, { height: 60 }]}
+                multiline
+                value={profile.skills}
+                onChangeText={(text) => handleChange("skills", text)}
+              />
+            ) : (
+              <Text style={styles.value}>{profile.skills}</Text>
+            )}
+          </View>
+        </View>
+
+        {/* Achievements Section */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>🏆 Achievements</Text>
+          {profile.achievements.map((item, index) => (
+            <View key={index} style={styles.field}>
+              {isEditing ? (
+                <TextInput
+                  style={styles.input}
+                  value={item}
+                  onChangeText={(text) => handleAchievementChange(index, text)}
+                />
+              ) : (
+                <Text style={styles.value}>• {item}</Text>
+              )}
+            </View>
+          ))}
+
+          {isEditing && (
+            <TouchableOpacity style={styles.addButton} onPress={addAchievement}>
+              <Icon name="add-circle-outline" size={22} color="#0D47A1" />
+              <Text style={styles.addText}>Add Achievement</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+
+        {/* Edit/Save Button */}
+        <TouchableOpacity
+          style={[styles.editButton, isEditing && { backgroundColor: "#2E7D32" }]}
+          onPress={isEditing ? handleSave : () => setIsEditing(true)}
+        >
+          <Icon
+            name={isEditing ? "check-circle" : "edit"}
+            size={20}
+            color="#fff"
+          />
+          <Text style={styles.editText}>
+            {isEditing ? "Save Profile" : "Edit Profile"}
+          </Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </LinearGradient>
   );
-}
+};
 
-// -------------------
-// 💅 Styling
-// -------------------
+export default ProfileScreen;
+
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: "#fff" },
-  profileHeader: { alignItems: "center", marginBottom: 20 },
-  avatar: { width: 100, height: 100, borderRadius: 50, marginBottom: 10 },
-  name: { fontSize: 22, fontWeight: "700", color: "#1A237E" },
-  roll: { fontSize: 16, color: "#555" },
-  sectionTitle: { fontSize: 18, fontWeight: "700", color: "#0D47A1", marginTop: 20 },
-  label: { fontSize: 15, marginTop: 8, color: "#333" },
-  value: { fontWeight: "600", color: "#1B5E20" },
-  percentText: { marginTop: 4, color: "#333", fontWeight: "600" },
-  progressContainer: {
-    height: 12,
-    backgroundColor: "#E0E0E0",
+  container: { flex: 1 },
+  content: { padding: 20 },
+  header: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#0D47A1",
+    textAlign: "center",
+    marginBottom: 20,
+  },
+  card: {
+    backgroundColor: "#E3F2FD",
+    borderRadius: 15,
+    padding: 15,
+    marginBottom: 20,
+  },
+  field: {
+    marginBottom: 10,
+  },
+  label: {
+    fontWeight: "600",
+    color: "#0D47A1",
+    marginBottom: 4,
+  },
+  value: {
+    color: "#333",
+    fontSize: 15,
+  },
+  input: {
+    backgroundColor: "#fff",
+    padding: 8,
     borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#90CAF9",
+  },
+  section: {
+    marginBottom: 20,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#0D47A1",
+    marginBottom: 8,
+  },
+  addButton: {
+    flexDirection: "row",
+    alignItems: "center",
     marginTop: 6,
   },
-  progressFill: { height: "100%", borderRadius: 8 },
-  infoBox: {
-    backgroundColor: "#E3F2FD",
-    padding: 14,
+  addText: {
+    color: "#0D47A1",
+    marginLeft: 5,
+  },
+  editButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#1976D2",
+    padding: 12,
     borderRadius: 10,
     marginTop: 10,
   },
-  skillBadge: {
-    backgroundColor: "#1565C0",
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderRadius: 20,
-    marginRight: 10,
-    marginTop: 8,
+  editText: {
+    color: "#fff",
+    marginLeft: 8,
+    fontWeight: "bold",
   },
-  skillText: { color: "#fff", fontWeight: "600" },
-  achievement: { fontSize: 15, marginTop: 6, color: "#333" },
-  editButton: {
-    backgroundColor: "#4CAF50",
-    padding: 10,
-    borderRadius: 10,
-    marginTop: 20,
-    alignItems: "center",
-  },
-  editText: { color: "#fff", fontWeight: "700" },
 });

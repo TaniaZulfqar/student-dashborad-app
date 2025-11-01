@@ -23,11 +23,11 @@ export default function CoursesScreen() {
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
 
   const courses: Course[] = [
-    {
+     {
       id: "1",
-      title: "Data Structures",
-      code: "CS201",
-      instructor: "Dr. Ahmed",
+      title: "Computer Science",
+      code: "CSI401",
+      instructor: "HOD. Dur-u-Subhani",
       creditHours: 3,
       gradePercent: 88,
       attendancePercent: 95,
@@ -40,9 +40,24 @@ export default function CoursesScreen() {
     },
     {
       id: "2",
+      title: "Operating Systems",
+      code: "CSI402",
+      instructor: "Dr. Yasir",
+      creditHours: 3,
+      gradePercent: 85,
+      attendancePercent: 94,
+      gradeBreakdown: [
+        { name: "Midterm", percent: 40 },
+        { name: "Final", percent: 30 },
+        { name: "Assignments", percent: 20 },
+        { name: "Quizzes", percent: 10 },
+      ],
+    },
+    {
+      id: "3",
       title: "Database Systems",
-      code: "CS301",
-      instructor: "Ms. Fatima",
+      code: "CS1403",
+      instructor: "Ms. Rabia",
       creditHours: 3,
       gradePercent: 81,
       attendancePercent: 89,
@@ -53,6 +68,36 @@ export default function CoursesScreen() {
         { name: "Homeworks", percent: 10 },
       ],
     },
+    {
+      id: "4",
+      title: "Discrete Structures",
+      code: "CS1404",
+      instructor: "Ms. Maria",
+      creditHours: 3,
+      gradePercent: 80,
+      attendancePercent: 85,
+      gradeBreakdown: [
+        { name: "Midterm", percent: 20 },
+        { name: "Final", percent: 50 },
+        { name: "Lab", percent: 20 },
+        { name: "Homeworks", percent: 10 },
+      ],
+    },
+    {
+      id: "5",
+      title: "Computer Networks",
+      code: "CS1405",
+      instructor: "Dr. Mahdi",
+      creditHours: 3,
+      gradePercent: 90,
+      attendancePercent: 95,
+      gradeBreakdown: [
+        { name: "Midterm", percent: 30 },
+        { name: "Final", percent: 30 },
+        { name: "Lab", percent: 20 },
+        { name: "Homeworks", percent: 10 },
+      ],
+    },    
   ];
 
   // progress bar

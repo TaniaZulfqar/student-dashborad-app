@@ -14,9 +14,96 @@ const StudentsScreen = () => {
   const [selectedStudent, setSelectedStudent] = useState<any>(null);
 
   const students = [
-    { id: "1", name: "Ayesha Khan", course: "Artificial Intelligence", grade: "A", attendance: "95%" },
-    { id: "2", name: "Ali Raza", course: "Database Systems", grade: "B+", attendance: "88%" },
-    { id: "3", name: "Sara Malik", course: "Operating Systems", grade: "A-", attendance: "92%" },
+    {
+      id: "1",
+      name: "Tania Zulfiqer",
+      course: "Computer Science",
+      grade: "A",
+      attendance: "95%",
+      semester: "7th",
+      gpa: "3.92",
+    },
+    {
+      id: "2",
+      name: "Saba Noreen",
+      course: "Database Systems",
+      grade: "A",
+      attendance: "98%",
+      semester: "7th",
+      gpa: "3.85",
+    },
+    {
+      id: "3",
+      name: "Amna Ashraf",
+      course: "Operating Systems",
+      grade: "A+",
+      attendance: "98%",
+      semester: "7th",
+      gpa: "3.90",
+    },
+    {
+      id: "4",
+      name: "Aneesha Shareef",
+      course: "Artificial Intelligence",
+      grade: "A-",
+      attendance: "70%",
+      semester: "7th",
+      gpa: "3.80",
+    },
+    {
+      id: "5",
+      name: "Fiza Arshad",
+      course: "Digital Logic Design",
+      grade: "A",
+      attendance: "98%",
+      semester: "7th",
+      gpa: "3.88",
+    },
+    {
+      id: "6",
+      name: "Fatima Alvi",
+      course: "Discrete Structures",
+      grade: "A-",
+      attendance: "92%",
+      semester: "7th",
+      gpa: "3.78",
+    },
+    {
+      id: "7",
+      name: "Sonia Alvi",
+      course: "Wrieless Communication",
+      grade: "A-",
+      attendance: "90%",
+      semester: "7th",
+      gpa: "3.75",
+    },
+    {
+      id: "8",
+      name: "Zoha Imraan",
+      course: "Computer Networks",
+      grade: "B+",
+      attendance: "85%",
+      semester: "7th",
+      gpa: "3.65",
+    },
+    {
+      id: "9",
+      name: "Nagina Bibi",
+      course: "Object Oriented Programming",
+      grade: "B",
+      attendance: "88%",
+      semester: "7th",
+      gpa: "3.70",
+    },
+    {
+      id: "10",
+      name: "Parwasha",
+      course: "Professional Practics",
+      grade: "B",
+      attendance: "90%",
+      semester: "7th",
+      gpa: "3.70",
+    },
   ];
 
   // 🎓 Student Detail View
@@ -35,7 +122,15 @@ const StudentsScreen = () => {
               🏆 <Text style={styles.label}>Grade:</Text> {selectedStudent.grade}
             </Text>
             <Text style={styles.detailText}>
-              📅 <Text style={styles.label}>Attendance:</Text> {selectedStudent.attendance}
+              📅 <Text style={styles.label}>Attendance:</Text>{" "}
+              {selectedStudent.attendance}
+            </Text>
+            <Text style={styles.detailText}>
+              🗓️ <Text style={styles.label}>Semester:</Text>{" "}
+              {selectedStudent.semester}
+            </Text>
+            <Text style={styles.detailText}>
+              🎯 <Text style={styles.label}>GPA:</Text> {selectedStudent.gpa}
             </Text>
           </View>
 

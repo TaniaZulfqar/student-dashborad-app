@@ -3,6 +3,7 @@ import React from "react";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import AttendanceScreen from "./screens/AttendanceScreen";
 import CoursesScreen from "./screens/CoursesScreen";
+import DashboardScreen from "./screens/Dashborad";
 import ProfileScreen from "./screens/ProfileScreen";
 import StudentsScreen from "./screens/StudentsScreen";
 
@@ -16,7 +17,8 @@ export default function App() {
           headerShown: true,
           tabBarIcon: ({ color, size }) => {
             let iconName = "home";
-            if (route.name === "Students") iconName = "people";
+            if (route.name === "Dashborad") iconName = "borad";
+            else if (route.name === "Students") iconName = "people";
             else if (route.name === "Courses") iconName = "book";
             else if (route.name === "Attendance") iconName = "bar-chart";
             else if (route.name === "Profile") iconName = "person";
@@ -34,6 +36,7 @@ export default function App() {
           headerTitleStyle: { fontWeight: "bold" },
         })}
       >
+        <Tab.Screen name="Dashborad" component={DashboardScreen} />
         <Tab.Screen name="Students" component={StudentsScreen} />
         <Tab.Screen name="Courses" component={CoursesScreen} />
         <Tab.Screen name="Attendance" component={AttendanceScreen} />
